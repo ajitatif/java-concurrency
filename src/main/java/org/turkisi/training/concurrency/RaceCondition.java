@@ -39,9 +39,18 @@ public class RaceCondition {
 
         System.out.println("Starting incrementer thread");
         incrementer.start();
-        Thread.sleep(2000);
+        Thread.sleep(1500);
         System.out.println("Starting decrementer thread");
         decrementer.start();
+        while (true) {
+            if (i > 7) {
+
+                System.out.println("Everything in order");
+                Thread.sleep(500);
+            } else {
+                throw new RuntimeException("I'm usually a null pointer exception");
+            }
+        }
     }
 
     public static void main(String[] args) {
