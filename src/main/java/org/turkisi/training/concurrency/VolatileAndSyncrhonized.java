@@ -3,23 +3,29 @@ package org.turkisi.training.concurrency;
 /**
  * @author Gökalp Gürbüzer (gokalp.gurbuzer@yandex.com)
  */
-public class RaceCondition {
+public class VolatileAndSyncrhonized {
 
-    private int i = 0;
+    private volatile int i = 0;
+
+    private final Object lock = new Object();
 
     private Runnable runnable1 = new Runnable() {
         @Override
         public void run() {
-            i = i + 1;
-            System.out.println("Thread 1. Current value: " + i);
+            synchronized (lock) {
+                i = i + 1;
+                System.out.println("Thread 1. Current value: " + i);
+            }
         }
     };
 
     private Runnable runnable2 = new Runnable() {
         @Override
         public void run() {
-            i = i - 1;
-            System.out.println("Thread 2. Current value: " + i);
+            synchronized (lock) {
+                i = i - 1;
+                System.out.println("Thread 2. Current value: " + i);
+            }
         }
     };
 
@@ -35,7 +41,7 @@ public class RaceCondition {
 
     public static void main(String[] args) {
         try {
-            new RaceCondition().go();
+            new VolatileAndSyncrhonized().go();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
